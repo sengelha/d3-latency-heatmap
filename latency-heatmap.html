@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+    svg {
+        font: 10pt sans-serif;
+    }
+
+    .axis path {
+        display: none;
+    }
+
+    .tick line {
+        opacity: 0.2;
+        shape-rendering: crispEdges;
+        stroke: black;
+    }
+</style>
+
+<body>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="latency-heatmap.js"></script>
+
+    <h1>Example 1 (From https://bl.ocks.org/jfsiii/b2f067a64995ff401590934531bae947)</h1>
+    <p>This still needs work .. tick density, block spacing, etc. are off</p>
+    <div id="example1"></div>
+    <script>
+        (function() {
+            var timeFormat = d3.time.format("%Y-%m-%d-%H");
+            var chart = d3.latencyHeatmap()
+                .margin({ top: 10, bottom: 10, left: 40, right: 0})
+                .x(function (d) { return timeFormat.parse(d.date); })
+                .y(function (d) { return +d.bucket; })
+                .count(function (d) { return +d.count; });
+
+            d3.csv("example1.csv", function (data) {
+                var svg = d3.select("#example1")
+                    .datum(data)
+                    .call(chart);
+            });
+        })();
+    </script>
+
+    <h1>Example 2</h1>
+    <p>This is decent but the squares still exceed the axis limits ... how to correct?</p>
+    <div id="example2"></div>
+    <script>
+        (function() {
+            var timeFormat = d3.time.format("%Y-%m");
+            var chart = d3.latencyHeatmap()
+                .x(function (d) { return timeFormat.parse(d.date); })
+                .y(function (d) { return +d.bucket; })
+                .count(function (d) { return +d.count; })
+                .rectSize([10, 8]);
+
+            d3.csv("example2.csv", function (data) {
+                var svg = d3.select("#example2")
+                    .datum(data)
+                    .call(chart);
+            });
+        })();
+    </script>
+</body>
+
+</html>
