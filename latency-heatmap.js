@@ -148,6 +148,36 @@
             return chart;
         }
 
+        chart.xScale = function(_) {
+            if (!arguments.length) return xScale;
+            xScale = _;
+            return chart;
+        }
+
+        chart.yScale = function(_) {
+            if (!arguments.length) return yScale;
+            yScale = _;
+            return chart;
+        }
+
+        chart.countScale = function(_) {
+            if (!arguments.length) return countScale;
+            countScale = _;
+            return chart;
+        }
+
+        chart.xAxis = function(_) {
+            if (!arguments.length) return xAxis;
+            xAxis = _;
+            return chart;
+        }
+
+        chart.yAxis = function(_) {
+            if (!arguments.length) return countAccessor;
+            yAxis = _;
+            return chart;
+        }
+
         return chart;
     };
 })();
