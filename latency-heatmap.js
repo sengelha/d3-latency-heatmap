@@ -14,7 +14,7 @@
             yAxis = d3.svg.axis().scale(yScale).orient("left").tickSize(0);
 
         function chart(selection) {
-            selection.each(function (data) {
+            selection.each(function (data) {                
                 // Convert data to standard representation
                 data = data.map(function (d, i) {
                     return [xAccessor.call(data, d, i), yAccessor.call(data, d, i), countAccessor.call(data, d, i)];
@@ -39,7 +39,7 @@
                 }
 
                 // Update the scales based on the passed-in values
-                // Subtracting rectSize[0] and rectSize[1]ensures the last box will
+                // Subtracting rectSize[0] and rectSize[1] ensures the last box will
                 // fit in the space of the chart
                 xScale
                     .domain(d3.extent(data, function (d) { return d[0]; }))

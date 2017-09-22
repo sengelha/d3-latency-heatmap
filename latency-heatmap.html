@@ -26,7 +26,7 @@
     <script src="latency-heatmap.js"></script>
 
     <h1>Example 1</h1>
-    <h2>Basic Usage</h2>
+    <h2>Fixed-Size Chart</h2>
     <div id="example1"></div>
     <script>
         (function() {
@@ -46,11 +46,30 @@
         })();
     </script>
 
-    
     <h1>Example 2</h1>
-    <h2>Demonstrates log y-axis</h2>
-    <h3>From https://bl.ocks.org/jfsiii/b2f067a64995ff401590934531bae947</h3>
+    <h2>Fixed-Size Blocks</h2>
     <div id="example2"></div>
+    <script>
+        (function() {
+            var timeFormat = d3.time.format("%Y-%m");
+            var chart = d3.latencyHeatmap()
+                .x(function (d) { return timeFormat.parse(d.date); })
+                .y(function (d) { return +d.bucket; })
+                .count(function (d) { return +d.count; })
+                .rectSize([4, 4]);
+
+            d3.csv("example1.csv", function (data) {
+                var svg = d3.select("#example2")
+                    .datum(data)
+                    .call(chart);
+            });
+        })();
+    </script>
+
+    <h1>Example 3</h1>
+    <h2>Log y-axis</h2>
+    <h3>Data from https://bl.ocks.org/jfsiii/b2f067a64995ff401590934531bae947</h3>
+    <div id="example3"></div>
     <script>
         (function() {
             var timeFormat = d3.time.format("%Y-%m-%d-%H");
@@ -58,12 +77,12 @@
                 .x(function (d) { return timeFormat.parse(d.date); })
                 .y(function (d) { return +d.bucket; })
                 .count(function (d) { return +d.count; })
-                .yScale(d3.scale.log().base(10))
+                .yScale(d3.scale.log())
                 .width(800)
                 .height(300);
 
             d3.csv("example2.csv", function (data) {
-                var svg = d3.select("#example2")
+                var svg = d3.select("#example3")
                     .datum(data)
                     .call(chart);
             });
@@ -72,7 +91,8 @@
 
     <h1>TODO</h1>
     <ul>
-        <li>Fixed-size rectangles</li>
+        <li>Fix log y scale -- its because yAxis is constructed before yScale is set</li>
+        <li>Either create an example with margin, xScale, countScale, xAxis, yAxis or remove those parameters from thechart</li>
     </ul>
 </body>
 
