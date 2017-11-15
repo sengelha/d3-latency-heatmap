@@ -1,6 +1,6 @@
 (function () {
     d3.latencyHeatmap = function () {
-        var margin = { top: 0, right: 0, bottom: 11, left: 0 },
+        var margin = { top: 1, right: 1, bottom: 11, left: 1 },
             width = 600,
             height = 400,
             rectSize = undefined,
@@ -48,11 +48,13 @@
                 var yExtent = d3.extent(data, function (d) { return d[1]; });
                 var countExtent = d3.extent(data, function (d) { return d[2]; });
 
-                // TODO: Need to extend by one element in order to fit all elements
                 var xScale = d3.time.scale()
                     .domain(xExtent)
-                    .range([0, contentWidth]);
-                var yScale = d3.scale.linear()
+                    .range([0, contentWidth - rectSize[0]]);
+                var yAxisScale = d3.scale.linear()
+                    .domain(yExtent)
+                    .range([contentHeight, 0]);
+                var yContentScale = d3.scale.linear()
                     .domain(yExtent)
                     .range([contentHeight - rectSize[1], 0]);
                 var countScale = d3.scale.linear()
@@ -69,7 +71,7 @@
                 if (xFormat)
                     xAxisDef.tickFormat(xFormat);
                 var yAxisDef = d3.svg.axis()
-                    .scale(yScale)
+                    .scale(yAxisScale)
                     .orient("left")
                     .innerTickSize(-contentWidth)
                     .outerTickSize(0)
@@ -100,7 +102,7 @@
                 nodes.enter()
                     .append("rect")
                     .attr("x", function (d) { return xScale(d[0]); })
-                    .attr("y", function (d) { return yScale(d[1]); })
+                    .attr("y", function (d) { return yContentScale(d[1]); })
                     .attr("width", rectSize[0])
                     .attr("height", rectSize[1])
                     .attr("fill", function (d) { return countScale(d[2]); });

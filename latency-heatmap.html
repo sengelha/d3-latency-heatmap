@@ -30,8 +30,8 @@
                             .yFormat(function(d) { return d + " s" })
                             .count(function (d) { return +d.count; })
                             .colorRange([d3.rgb('#FFFFFF'), d3.rgb('#5B82A1')])
-                            .width(400)
-                            .height(300);
+                            .width(1000)
+                            .height(800);
             
                         d3.csv("example1.csv", function (data) {
                             var svg = d3.select("#example1-1")
