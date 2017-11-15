@@ -30,8 +30,8 @@
                             .yFormat(function(d) { return d + " s" })
                             .count(function (d) { return +d.count; })
                             .colorRange([d3.rgb('#FFFFFF'), d3.rgb('#5B82A1')])
-                            .width(1000)
-                            .height(800);
+                            .width(400)
+                            .height(300);
             
                         d3.csv("example1.csv", function (data) {
                             var svg = d3.select("#example1-1")
@@ -73,39 +73,43 @@
                 <div id="example2-1"></div>
                 <script>
                     (function() {
-                        var formatTime = d3.time.format("%Y-%m-%d-%H");
-                        var chart = d3.latencyHeatmap()
-                            .x(function (d) { return formatTime.parse(d.date); })
-                            .y(function (d) { return +d.bucket; })
-                            .count(function (d) { return +d.count; })
-                            .width(400)
-                            .height(300);
+                        var nCols = 100;
+                        var nRows = 50;
+                        var data = [];
 
-                        d3.csv("example2.csv", function (data) {
+                        var dt = new Date(new Date().getTime() - nCols * 1000);
+                        for (var i = 0; i < nCols; ++i) {
+                            dt = new Date(dt.getTime() + 1000);
+                            for (var j = 0; j < nRows; ++j) {
+                                data.push({
+                                    date: dt,
+                                    bucket: j,
+                                    count: Math.random()
+                                });
+                            }
+                        }
+
+                        var formatTime = d3.time.format("%Y-%m");
+                        var chart = d3.latencyHeatmap()
+                            .x(function (d) { return d.date; })
+                            .y(function (d) { return d.bucket; })
+                            .count(function (d) { return d.count; })
+                            .rectSize([10, 10]);
+
+                        setInterval(function() {
+                            data = data.slice(nRows);
+                            dt = new Date(dt.getTime() + 1000);
+                            for (var i = 0; i < nRows; ++i) {
+                                data.push({
+                                    date: dt,
+                                    bucket: i,
+                                    count: Math.random()
+                                });
+                            };
                             var svg = d3.select("#example2-1")
                                 .datum(data)
                                 .call(chart);
-                        });
-                    })();
-                </script>
-            </td>
-            <td>
-                <h2>3x3 Rectangles</h2>
-                <div id="example2-2"></div>
-                <script>
-                    (function() {
-                        var formatTime = d3.time.format("%Y-%m-%d-%H");
-                        var chart = d3.latencyHeatmap()
-                            .x(function (d) { return formatTime.parse(d.date); })
-                            .y(function (d) { return +d.bucket; })
-                            .count(function (d) { return +d.count; })
-                            .rectSize([4, 4]);
-
-                        d3.csv("example2.csv", function (data) {
-                            var svg = d3.select("#example2-2")
-                                .datum(data)
-                                .call(chart);
-                        });
+                        }, 1000);
                     })();
                 </script>
             </td>

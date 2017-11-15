@@ -99,6 +99,12 @@
                 var nodes = g.select(".elems")
                     .selectAll("rect")
                     .data(data);
+                // Update old elements
+                nodes
+                    .attr("x", function (d) { return xScale(d[0]); })
+                    .attr("y", function (d) { return yContentScale(d[1]); })
+                    .attr("fill", function (d) { return countScale(d[2]); });
+                // Create new elements
                 nodes.enter()
                     .append("rect")
                     .attr("x", function (d) { return xScale(d[0]); })
@@ -106,9 +112,10 @@
                     .attr("width", rectSize[0])
                     .attr("height", rectSize[1])
                     .attr("fill", function (d) { return countScale(d[2]); });
+                // Remove old elements
                 nodes.exit()
                     .remove();
-
+                    
                 // Update the x-axis
                 var xAxis = g.select(".x.axis")
                     .attr("transform", "translate(0," + contentHeight + ")")
