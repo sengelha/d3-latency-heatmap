@@ -1,20 +1,22 @@
 (function () {
     d3.latencyHeatmap = function () {
-        var margin = { top: 10, right: 10, bottom: 10, left: 30 },
+        var margin = { top: 0, right: 0, bottom: 11, left: 0 },
             width = 600,
             height = 400,
             rectSize = undefined,
             xAccessor = function (d) { return d[0]; },
+            xFormat = undefined,
             yAccessor = function (d) { return d[1]; },
+            yFormat = undefined,
             countAccessor = function (d) { return d[2]; },
-            xScale = d3.time.scale(),
-            yScale = d3.scale.linear(),
-            countScale = d3.scale.linear(),
-            xAxis = d3.svg.axis().scale(xScale).orient("bottom").innerTickSize(-height+margin.top+margin.bottom).outerTickSize(0),
-            yAxis = d3.svg.axis().scale(yScale).orient("left").tickSize(0);
+            colorRange = [d3.rgb('#FFFFFF'), d3.rgb('#F03524')],
+            axisColor = "#ddd",
+            xAxisTextColor = "#999",
+            yAxisTextColor = "#000",
+            axisFontSizePx = 11;
 
         function chart(selection) {
-            selection.each(function (data) {                
+            selection.each(function (data) {
                 // Convert data to standard representation
                 data = data.map(function (d, i) {
                     return [xAccessor.call(data, d, i), yAccessor.call(data, d, i), countAccessor.call(data, d, i)];
@@ -35,22 +37,45 @@
                     width = rectSize[0] * nCols + margin.left + margin.right;
                     height = rectSize[1] * nRows + margin.top + margin.bottom;
                 } else {
-                    rectSize = [width / nCols, height / nRows];
+                    rectSize = [(width - margin.left - margin.right) / nCols, (height - margin.top - margin.bottom) / nRows];
                 }
 
-                // Update the scales based on the passed-in values
-                // Subtracting rectSize[0] and rectSize[1] ensures the last box will
-                // fit in the space of the chart
-                xScale
-                    .domain(d3.extent(data, function (d) { return d[0]; }))
-                    .range([0, width - margin.left - margin.right - rectSize[0]]);
-                yScale
-                    .domain(d3.extent(data, function (d) { return d[1]; }))
-                    .range([height - margin.top - margin.bottom - rectSize[1], 0]);
-                countScale
+                var contentWidth = width - margin.left - margin.right,
+                    contentHeight = height - margin.top - margin.bottom;
+
+                // Calculate all the extents once
+                var xExtent = d3.extent(data, function (d) { return d[0]; });
+                var yExtent = d3.extent(data, function (d) { return d[1]; });
+                var countExtent = d3.extent(data, function (d) { return d[2]; });
+
+                // TODO: Need to extend by one element in order to fit all elements
+                var xScale = d3.time.scale()
+                    .domain(xExtent)
+                    .range([0, contentWidth]);
+                var yScale = d3.scale.linear()
+                    .domain(yExtent)
+                    .range([contentHeight - rectSize[1], 0]);
+                var countScale = d3.scale.linear()
                     .domain(d3.extent(data, function (d) { return d[2]; }))
                     .interpolate(d3.interpolateRgb)
-                    .range([d3.rgb('#FFFFFF'), d3.rgb('#9E0142')]);
+                    .range(colorRange);
+
+                // Create the axis definitions using the scale
+                var xAxisDef = d3.svg.axis()
+                    .scale(xScale)
+                    .orient("bottom")
+                    .innerTickSize(-contentHeight)
+                    .outerTickSize(0);
+                if (xFormat)
+                    xAxisDef.tickFormat(xFormat);
+                var yAxisDef = d3.svg.axis()
+                    .scale(yScale)
+                    .orient("left")
+                    .innerTickSize(-contentWidth)
+                    .outerTickSize(0)
+                    .ticks(1);
+                if (yFormat)
+                    yAxisDef.tickFormat(yFormat);
 
                 // Select the svg element, if it exists.
                 var svg = d3.select(this).selectAll("svg").data([data]);
@@ -74,43 +99,43 @@
                     .data(data);
                 nodes.enter()
                     .append("rect")
-                    .attr("x", function (d) { return X(d); })
-                    .attr("y", function (d) { return Y(d) - rectSize[1]; })
+                    .attr("x", function (d) { return xScale(d[0]); })
+                    .attr("y", function (d) { return yScale(d[1]); })
                     .attr("width", rectSize[0])
                     .attr("height", rectSize[1])
-                    .attr("fill", function (d) { return Count(d); });
+                    .attr("fill", function (d) { return countScale(d[2]); });
                 nodes.exit()
                     .remove();
 
                 // Update the x-axis
-                xAxis = xAxis.innerTickSize(-height);
-                g.select(".x.axis")
-                    .attr("transform", "translate(0," + yScale.range()[0] + ")")
-                    .call(xAxis);
+                var xAxis = g.select(".x.axis")
+                    .attr("transform", "translate(0," + contentHeight + ")")
+                    .style("font-size", axisFontSizePx + "px")
+                    .call(xAxisDef);
+                xAxis.selectAll("line")
+                    .style("shape-rendering", "crispEdges")
+                    .style("stroke", axisColor);
+                xAxis.selectAll("text")
+                    .style("text-anchor", "start")
+                    .style("fill", xAxisTextColor);
 
                 // Update the y-axis
-                g.select(".y.axis")
-                    .call(yAxis);
+                var yAxis = g.select(".y.axis")
+                    .style("font-size", axisFontSizePx + "px")
+                    .call(yAxisDef);
+                yAxis.selectAll("line")
+                    .style("shape-rendering", "crispEdges")
+                    .style("stroke", axisColor);
+                yAxis.selectAll(".tick text")
+                    .attr("x", 2)
+                    .style("text-anchor", "start")
+                    .style("fill", yAxisTextColor);
+                yAxis.selectAll(".tick:last-of-type text")
+                    .attr("y", 8);
+                yAxis.selectAll(".tick:first-of-type text")
+                    .attr("y", -8);
             });
         }
-
-        function X(d) {
-            return xScale(d[0]);
-        }
-
-        function Y(d) {
-            return yScale(d[1]);
-        }
-
-        function Count(d) {
-            return countScale(d[2]);
-        }
-
-        chart.margin = function (_) {
-            if (!arguments.length) return margin;
-            margin = _;
-            return chart;
-        };
 
         chart.width = function (_) {
             if (!arguments.length) return width;
@@ -148,33 +173,21 @@
             return chart;
         }
 
-        chart.xScale = function(_) {
-            if (!arguments.length) return xScale;
-            xScale = _;
+        chart.xFormat = function (_) {
+            if (!arguments.length) return xFormat;
+            xFormat = _;
             return chart;
         }
 
-        chart.yScale = function(_) {
-            if (!arguments.length) return yScale;
-            yScale = _;
+        chart.yFormat = function (_) {
+            if (!arguments.length) return yFormat;
+            yFormat = _;
             return chart;
         }
 
-        chart.countScale = function(_) {
-            if (!arguments.length) return countScale;
-            countScale = _;
-            return chart;
-        }
-
-        chart.xAxis = function(_) {
-            if (!arguments.length) return xAxis;
-            xAxis = _;
-            return chart;
-        }
-
-        chart.yAxis = function(_) {
-            if (!arguments.length) return countAccessor;
-            yAxis = _;
+        chart.colorRange = function (_) {
+            if (!arguments.length) return colorRange;
+            colorRange = _;
             return chart;
         }
 

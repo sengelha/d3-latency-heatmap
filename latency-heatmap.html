@@ -6,18 +6,8 @@
         font-size: 12px;
     }
 
-    svg {
-        font: 10pt sans-serif;
-    }
-
-    .axis path {
-        display: none;
-    }
-
-    .tick line {
-        opacity: 0.2;
-        shape-rendering: crispEdges;
-        stroke: black;
+    td {
+        vertical-align: top;
     }
 </style>
 
@@ -26,74 +16,101 @@
     <script src="latency-heatmap.js"></script>
 
     <h1>Example 1</h1>
-    <h2>Fixed-Size Chart</h2>
-    <div id="example1"></div>
-    <script>
-        (function() {
-            var timeFormat = d3.time.format("%Y-%m");
-            var chart = d3.latencyHeatmap()
-                .x(function (d) { return timeFormat.parse(d.date); })
-                .y(function (d) { return +d.bucket; })
-                .count(function (d) { return +d.count; })
-                .width(800)
-                .height(400);
-
-            d3.csv("example1.csv", function (data) {
-                var svg = d3.select("#example1")
-                    .datum(data)
-                    .call(chart);
-            });
-        })();
-    </script>
+    <table>
+        <tr>
+            <td>
+                <h2>400x300</h2>
+                <div id="example1-1"></div>
+                <script>
+                    (function() {
+                        var formatTime = d3.time.format("%Y-%m");
+                        var chart = d3.latencyHeatmap()
+                            .x(function (d) { return formatTime.parse(d.date); })
+                            .y(function (d) { return +d.bucket; })
+                            .yFormat(function(d) { return d + " s" })
+                            .count(function (d) { return +d.count; })
+                            .colorRange([d3.rgb('#FFFFFF'), d3.rgb('#5B82A1')])
+                            .width(400)
+                            .height(300);
+            
+                        d3.csv("example1.csv", function (data) {
+                            var svg = d3.select("#example1-1")
+                                .datum(data)
+                                .call(chart);
+                        });
+                    })();
+                </script>            
+            </td>
+            <td>
+                <h2>5x5 Rectangles</h2>
+                <div id="example1-2"></div>
+                <script>
+                    (function() {
+                        var formatTime = d3.time.format("%Y-%m");
+                        var chart = d3.latencyHeatmap()
+                            .x(function (d) { return formatTime.parse(d.date); })
+                            .y(function (d) { return +d.bucket; })
+                            .yFormat(function(d) { return d + " s" })
+                            .count(function (d) { return +d.count; })
+                            .rectSize([5, 5]);
+            
+                        d3.csv("example1.csv", function (data) {
+                            var svg = d3.select("#example1-2")
+                                .datum(data)
+                                .call(chart);
+                        });
+                    })();
+                </script>
+            </td>
+        </tr>
+    </table>
 
     <h1>Example 2</h1>
-    <h2>Fixed-Size Blocks</h2>
-    <div id="example2"></div>
-    <script>
-        (function() {
-            var timeFormat = d3.time.format("%Y-%m");
-            var chart = d3.latencyHeatmap()
-                .x(function (d) { return timeFormat.parse(d.date); })
-                .y(function (d) { return +d.bucket; })
-                .count(function (d) { return +d.count; })
-                .rectSize([4, 4]);
+    <table>
+        <tr>
+            <td>
+                <h2>400x300</h2>
+                <div id="example2-1"></div>
+                <script>
+                    (function() {
+                        var formatTime = d3.time.format("%Y-%m-%d-%H");
+                        var chart = d3.latencyHeatmap()
+                            .x(function (d) { return formatTime.parse(d.date); })
+                            .y(function (d) { return +d.bucket; })
+                            .count(function (d) { return +d.count; })
+                            .width(400)
+                            .height(300);
 
-            d3.csv("example1.csv", function (data) {
-                var svg = d3.select("#example2")
-                    .datum(data)
-                    .call(chart);
-            });
-        })();
-    </script>
+                        d3.csv("example2.csv", function (data) {
+                            var svg = d3.select("#example2-1")
+                                .datum(data)
+                                .call(chart);
+                        });
+                    })();
+                </script>
+            </td>
+            <td>
+                <h2>3x3 Rectangles</h2>
+                <div id="example2-2"></div>
+                <script>
+                    (function() {
+                        var formatTime = d3.time.format("%Y-%m-%d-%H");
+                        var chart = d3.latencyHeatmap()
+                            .x(function (d) { return formatTime.parse(d.date); })
+                            .y(function (d) { return +d.bucket; })
+                            .count(function (d) { return +d.count; })
+                            .rectSize([4, 4]);
 
-    <h1>Example 3</h1>
-    <h2>Log y-axis</h2>
-    <h3>Data from https://bl.ocks.org/jfsiii/b2f067a64995ff401590934531bae947</h3>
-    <div id="example3"></div>
-    <script>
-        (function() {
-            var timeFormat = d3.time.format("%Y-%m-%d-%H");
-            var chart = d3.latencyHeatmap()
-                .x(function (d) { return timeFormat.parse(d.date); })
-                .y(function (d) { return +d.bucket; })
-                .count(function (d) { return +d.count; })
-                .yScale(d3.scale.log())
-                .width(800)
-                .height(300);
-
-            d3.csv("example2.csv", function (data) {
-                var svg = d3.select("#example3")
-                    .datum(data)
-                    .call(chart);
-            });
-        })();
-    </script>
-
-    <h1>TODO</h1>
-    <ul>
-        <li>Fix log y scale -- its because yAxis is constructed before yScale is set</li>
-        <li>Either create an example with margin, xScale, countScale, xAxis, yAxis or remove those parameters from thechart</li>
-    </ul>
+                        d3.csv("example2.csv", function (data) {
+                            var svg = d3.select("#example2-2")
+                                .datum(data)
+                                .call(chart);
+                        });
+                    })();
+                </script>
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>
