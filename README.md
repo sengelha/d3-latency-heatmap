@@ -42,7 +42,10 @@ D3 version 3.x is required (4.x is not supported).
 
 ## API Reference
 
-TODO
+### d3.latencyHeatmap()
+
+Creates a new latency heatmap chart which may later be rendered into a
+container.
 
 ## License
 
