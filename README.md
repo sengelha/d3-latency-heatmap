@@ -67,7 +67,7 @@ The typical pattern that the chart is rendered is by:
 3. Using d3's `call()` method.
 
 Example:
-```html
+```javascript
 var data = [...]; // May be sourced using d3.csv(), d3.json(), etc.
 d3.select("#container")
     .datum(data)
@@ -81,7 +81,7 @@ range will be interpolated using `d3.interpolateRgb()`.  If not set,
 defaults to `[d3.rgb('#FFFFFF'), d3.rgb('#F03524')]`.
 
 Example:
-```html
+```javascript
 d3.latencyHeatmap()
     .colorRange([d3.rgb('#FFFFFF'), d3.rgb('#5B82A1')]);
 ```
@@ -93,7 +93,7 @@ Must return a number, which corresponds to the number of observations
 within the bucket.  If not set, defaults to `function(d) { return d[2]; }`.
 
 Example:
-```html
+```javascript
 d3.latencyHeatmap()
     .count(function(d) { return d.count; }); // d is { x: Date, y: number, count: number }
 ```
@@ -108,7 +108,7 @@ This value is ignored if the rectangle size is set manually using
 **rectSize**().
 
 Example:
-```html
+```javascript
 d3.latencyHeatmap()
     .height(400);
 ```
@@ -121,7 +121,7 @@ calculates the total width and height based on the number of elements
 to be drawn.
 
 Example:
-```html
+```javascript
 d3.latencyHeatmap()
     .rectSize([6, 4]);
 ```
@@ -136,7 +136,7 @@ This value is ignored if the rectangle size is set manually using
 **rectSize**().
 
 Example:
-```html
+```javascript
 d3.latencyHeatmap()
     .width(600);
 ```
@@ -148,7 +148,7 @@ a `Date` object, which must correspond to the timestmap of the bucket.
 If not set, defaults to `function(d) { return d[0]; }`.
 
 Example:
-```html
+```javascript
 d3.latencyHeatmap()
     .x(function(d) { return d.x; }); // d is { x: Date, y: number, count: number }
 ```
@@ -161,7 +161,7 @@ which is a `Date` object.  If not set, defaults to the d3 default time
 axis tick formatter.
 
 Example:
-```html
+```javascript
 d3.latencyHeatmap()
     .xFormat(function(dt) { return dt.toLocaleString(); });
 ```
@@ -173,7 +173,7 @@ a number, which corresponds to the y-value of the bucket.
 If not set, defaults to `function(d) { return d[1]; }`.
 
 Example:
-```html
+```javascript
 d3.latencyHeatmap()
     .y(function(d) { return d.y; }); // d is { x: Date, y: number, count: number }
 ```
@@ -185,7 +185,7 @@ y-axis are formatted.  *formatter* is called with the y-value for the tick.
 If not set, defaults to the d3 default linear axis tick formatter.
 
 Example:
-```html
+```javascript
 d3.latencyHeatmap()
     .yFormat(function(y) { return y + " ms"; }); // y values are denoted in ms
 ```
