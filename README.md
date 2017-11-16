@@ -1,8 +1,9 @@
 # D3 Latency Heatmap
 
-This project provides a reusable D3 latency heatmap chart, which is
-an effective way to visualize latency data.  This chart is quick and
-easy to use, and produces beautiful images such as the below:
+This is a reusable D3 latency heatmap chart, which is a highly
+effective way to visualize latency data over time.  The chart is
+quick and easy to use, and produces beautiful images such as the
+below:
 
 ![Example Latency Heatmap](samples/example1.png)
 
@@ -12,7 +13,7 @@ For more on latency heatmaps, see:
 
 ## Getting Started
 
-D3 version 3.x is required (4.x is not yet supported).
+D3 version 3.x is required (4.x is not supported).
 
 ```html
 <script src="//d3js.org/d3.v3.min.js"></script>
@@ -40,3 +41,13 @@ D3 version 3.x is required (4.x is not yet supported).
 ```
 
 ## API Reference
+
+TODO
+
+## License
+
+TODO
+
+## Credits
+
+TODO
