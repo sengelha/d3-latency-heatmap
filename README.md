@@ -40,17 +40,156 @@ D3 version 3.x is required (4.x is not supported).
 </script>
 ```
 
+## Usage Notes
+
+* In order to use this chart, your data must already be bucketized
+  -- you cannot use raw events.  A bucket contains three data points:
+  the x-value, the y-value, and the number of observations in this
+  bucket.
+* The color intensity of a cell is determined based on its value
+  relative to the maximum value of all buckets.  This implies that
+  if the number of observations per x-value (e.g. per day) increases
+  over time, the cells will start with faint colors and grow more
+  intense over time.
+* This chart's API was modelled upon Mike Bostock's
+  [Toward Reusable Charts](https://bost.ocks.org/mike/chart/) proposal.
+
 ## API Reference
 
 ### d3.latencyHeatmap()
 
 Creates a new latency heatmap chart which may later be rendered into a
-container.
+container.  Returns a *chart* object.
+
+The typical pattern that the chart is rendered is by:
+1. Selecting the container (e.g. a `div`) into which the chart will be rendered
+2. Assigning the data to the container
+3. Using d3's `call()` method.
+
+Example:
+```html
+var data = [...]; // May be sourced using d3.csv(), d3.json(), etc.
+d3.select("#container")
+    .datum(data)
+    .call(chart);
+```
+
+### *chart*.colorRange(*[minColor, maxColor]*)
+
+Defines the color range to be used when filling cells.  This color
+range will be interpolated using `d3.interpolateRgb()`.  If not set,
+defaults to `[d3.rgb('#FFFFFF'), d3.rgb('#F03524')]`.
+
+Example:
+```html
+d3.latencyHeatmap()
+    .colorRange([d3.rgb('#FFFFFF'), d3.rgb('#5B82A1')]);
+```
+
+### *chart*.count(*accessor*)
+
+Defines an count accessor which is called for each row in `data`.
+Must return a number, which corresponds to the number of observations
+within the bucket.  If not set, defaults to `function(d) { return d[2]; }`.
+
+Example:
+```html
+d3.latencyHeatmap()
+    .count(function(d) { return d.count; }); // d is { x: Date, y: number, count: number }
+```
+
+### *chart*.height(*h*)
+
+Sets the height of the rendered chart to *h*.  Automatically scales
+the size of the drawn rectangles to fit the specified chart height.
+If not set, defaults to 400.
+
+This value is ignored if the rectangle size is set manually using
+**rectSize**().
+
+Example:
+```html
+d3.latencyHeatmap()
+    .height(400);
+```
+
+### *chart*.rectSize(*[w, h]*)
+
+Sets the size of the individual rectangles used to draw the chart to
+be width *w* and height *w*.  When set, the chart automatically
+calculates the total width and height based on the number of elements
+to be drawn.
+
+Example:
+```html
+d3.latencyHeatmap()
+    .rectSize([6, 4]);
+```
+
+### *chart*.width(*w*)
+
+Sets the width of the rendered chart to *w*.  Automatically scales
+the size of the drawn rectangles to fit the specified chart width.
+If not set, defaults to 600.
+
+This value is ignored if the rectangle size is set manually using
+**rectSize**().
+
+Example:
+```html
+d3.latencyHeatmap()
+    .width(600);
+```
+
+### *chart*.x(*accessor*)
+
+Defines an x accessor which is called for each row in `data`.  Must return
+a `Date` object, which must correspond to the timestmap of the bucket.
+If not set, defaults to `function(d) { return d[0]; }`.
+
+Example:
+```html
+d3.latencyHeatmap()
+    .x(function(d) { return d.x; }); // d is { x: Date, y: number, count: number }
+```
+
+### *chart*.xFormat(*formatter*)
+
+Defines an accessor which can be used to contorl how tick labels on the
+x-axis are formatted.  *formatter* is called with the x-value for the tick,
+which is a `Date` object.  If not set, defaults to the d3 default time
+axis tick formatter.
+
+Example:
+```html
+d3.latencyHeatmap()
+    .xFormat(function(dt) { return dt.toLocaleString(); });
+```
+
+### *chart*.y(*accessor*)
+
+Defines an y accessor which is called for each row in `data`.  Must return
+a number, which corresponds to the y-value of the bucket.
+If not set, defaults to `function(d) { return d[1]; }`.
+
+Example:
+```html
+d3.latencyHeatmap()
+    .y(function(d) { return d.y; }); // d is { x: Date, y: number, count: number }
+```
+
+### *chart*.yFormat(*accessor*)
+
+Defines an accessor which can be used to contorl how tick labels on the
+y-axis are formatted.  *formatter* is called with the y-value for the tick.
+If not set, defaults to the d3 default linear axis tick formatter.
+
+Example:
+```html
+d3.latencyHeatmap()
+    .yFormat(function(y) { return y + " ms"; }); // y values are denoted in ms
+```
 
 ## License
 
-TODO
-
-## Credits
-
-TODO
+This project is licensed under the MIT License.

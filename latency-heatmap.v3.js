@@ -58,7 +58,7 @@
                     .domain(yExtent)
                     .range([contentHeight - rectSize[1], 0]);
                 var countScale = d3.scale.linear()
-                    .domain(d3.extent(data, function (d) { return d[2]; }))
+                    .domain(countExtent)
                     .interpolate(d3.interpolateRgb)
                     .range(colorRange);
 
