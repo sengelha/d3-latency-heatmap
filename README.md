@@ -2,7 +2,7 @@
 
 This is a reusable D3 latency heatmap chart, which is a highly
 effective way to visualize latency data over time.  The chart is
-quick and easy to use, and produces beautiful images such as the
+fast, easy to use, and produces beautiful images such as the
 below:
 
 ![Example Latency Heatmap](samples/example1.png)
@@ -51,6 +51,7 @@ D3 version 3.x is required (4.x is not supported).
   if the number of observations per x-value (e.g. per day) increases
   over time, the cells will start with faint colors and grow more
   intense over time.
+* See the [samples](samples/) directory for some usage examples.
 * This chart's API was modelled upon Mike Bostock's
   [Toward Reusable Charts](https://bost.ocks.org/mike/chart/) proposal.
 
@@ -104,7 +105,7 @@ Sets the height of the rendered chart to *h*.  Automatically scales
 the size of the drawn rectangles to fit the specified chart height.
 If not set, defaults to 400.
 
-This value is ignored if the rectangle size is set manually using
+This value is ignored if the rectangle size is set using
 **rectSize**().
 
 Example:
@@ -132,7 +133,7 @@ Sets the width of the rendered chart to *w*.  Automatically scales
 the size of the drawn rectangles to fit the specified chart width.
 If not set, defaults to 600.
 
-This value is ignored if the rectangle size is set manually using
+This value is ignored if the rectangle size is set using
 **rectSize**().
 
 Example:

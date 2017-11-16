@@ -16,6 +16,7 @@
     <script src="../latency-heatmap.v3.js"></script>
 
     <h1>Example 1</h1>
+    <p>Shows how to source data from a CSV, control the y-axis tick labels, color ranges, and chart size.</p>
     <table>
         <tr>
             <td>
@@ -59,57 +60,6 @@
                                 .datum(data)
                                 .call(chart);
                         });
-                    })();
-                </script>
-            </td>
-        </tr>
-    </table>
-
-    <h1>Example 2</h1>
-    <table>
-        <tr>
-            <td>
-                <h2>400x300</h2>
-                <div id="example2-1"></div>
-                <script>
-                    (function() {
-                        var nCols = 100;
-                        var nRows = 50;
-                        var data = [];
-
-                        var dt = new Date(new Date().getTime() - nCols * 1000);
-                        for (var i = 0; i < nCols; ++i) {
-                            dt = new Date(dt.getTime() + 1000);
-                            for (var j = 0; j < nRows; ++j) {
-                                data.push({
-                                    date: dt,
-                                    bucket: j,
-                                    count: Math.random()
-                                });
-                            }
-                        }
-
-                        var formatTime = d3.time.format("%Y-%m");
-                        var chart = d3.latencyHeatmap()
-                            .x(function (d) { return d.date; })
-                            .y(function (d) { return d.bucket; })
-                            .count(function (d) { return d.count; })
-                            .rectSize([10, 10]);
-
-                        setInterval(function() {
-                            data = data.slice(nRows);
-                            dt = new Date(dt.getTime() + 1000);
-                            for (var i = 0; i < nRows; ++i) {
-                                data.push({
-                                    date: dt,
-                                    bucket: i,
-                                    count: Math.random()
-                                });
-                            };
-                            var svg = d3.select("#example2-1")
-                                .datum(data)
-                                .call(chart);
-                        }, 1000);
                     })();
                 </script>
             </td>
