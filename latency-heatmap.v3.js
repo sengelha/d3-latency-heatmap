@@ -9,6 +9,7 @@
             yAccessor = function (d) { return d[1]; },
             yFormat = undefined,
             countAccessor = function (d) { return d[2]; },
+            tooltipText = undefined,
             colorRange = [d3.rgb('#FFFFFF'), d3.rgb('#F03524')],
             axisColor = "#ddd",
             xAxisTextColor = "#999",
@@ -105,13 +106,17 @@
                     .attr("y", function (d) { return yContentScale(d[1]); })
                     .attr("fill", function (d) { return countScale(d[2]); });
                 // Create new elements
-                nodes.enter()
+                var rects = nodes.enter()
                     .append("rect")
                     .attr("x", function (d) { return xScale(d[0]); })
                     .attr("y", function (d) { return yContentScale(d[1]); })
                     .attr("width", rectSize[0])
                     .attr("height", rectSize[1])
                     .attr("fill", function (d) { return countScale(d[2]); });
+                if (tooltipText) {
+                    rects.append("title")
+                        .html(function (d) { return tooltipText(d) });
+                }
                 // Remove old elements
                 nodes.exit()
                     .remove();
@@ -197,6 +202,12 @@
         chart.colorRange = function (_) {
             if (!arguments.length) return colorRange;
             colorRange = _;
+            return chart;
+        }
+
+        chart.tooltipText = function (_) {
+            if (!arguments.length) return tooltipText;
+            tooltipText = _;
             return chart;
         }
 

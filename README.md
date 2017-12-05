@@ -29,8 +29,8 @@ D3 version 3.x is required (4.x is not supported).
         .yFormat(function(d) { return d + " s"; })
         .count(function(d) { return +d.count; })
         .colorRange([d3.rgb('#FFFFFF'), d3.rgb('#5B82A1')])
-        .width(400)
-        .height(300);
+        .tooltipText(function (d) { return "YearMonth: " + d[0].toISOString().substring(0, 7) + "\nBucket: " + d[1] + "\nCount: " + d[2]; })
+        .rectSize([8, 8]);
     d3.csv("//cdn.rawgit.com/sengelha/d3-latency-heatmap/master/samples/example1.csv", function (data) {
         var svg = d3.select("#chart")
             .datum(data)
@@ -127,6 +127,20 @@ d3.latencyHeatmap()
     .rectSize([6, 4]);
 ```
 
+### *chart*.tooltipText(*formatter*)
+
+Defines an accessor which can be used to control how tooltips for
+each drawn rectangle are formatted.  *formatter* is called with an
+array with three elements: the x-value for the tick (a `Date` object),
+the y-value for the tick (a number) and the count.  If not set, no
+tooltips are drawn.
+
+Example:
+```javascript
+d3.latencyHeatmap()
+    .tooltipText(function (d) { return "X: " + d[0] + " Y: " + d[1] + " Count: " + d[2]; });
+```
+
 ### *chart*.width(*w*)
 
 Sets the width of the rendered chart to *w*.  Automatically scales
@@ -156,7 +170,7 @@ d3.latencyHeatmap()
 
 ### *chart*.xFormat(*formatter*)
 
-Defines an accessor which can be used to contorl how tick labels on the
+Defines an accessor which can be used to control how tick labels on the
 x-axis are formatted.  *formatter* is called with the x-value for the tick,
 which is a `Date` object.  If not set, defaults to the d3 default time
 axis tick formatter.
@@ -181,7 +195,7 @@ d3.latencyHeatmap()
 
 ### *chart*.yFormat(*accessor*)
 
-Defines an accessor which can be used to contorl how tick labels on the
+Defines an accessor which can be used to control how tick labels on the
 y-axis are formatted.  *formatter* is called with the y-value for the tick.
 If not set, defaults to the d3 default linear axis tick formatter.
 
