@@ -13,14 +13,14 @@
 
 <body>
     <script src="//d3js.org/d3.v3.min.js"></script>
-    <script src="../latency-heatmap.v3.js"></script>
+    <script src="../latency-heatmap.v1.js"></script>
 
-    <h1>Example 1</h1>
-    <p>Shows how to source data from a CSV, control the y-axis tick labels, color ranges, tooltips, and chart size.</p>
+    <h1>Report Queue Latency</h1>
+    <p>Example chart rendering report queue latency.  Shows how to source data from a CSV, control the y-axis tick labels, color ranges, tooltips, and chart size.</p>
     <table>
         <tr>
             <td>
-                <div id="example1"></div>
+                <div id="chart"></div>
                 <script>
                     (function() {
                         var formatTime = d3.time.format("%Y-%m");
@@ -33,8 +33,8 @@
                             .tooltipText(function (d) { return "YearMonth: " + d[0].toISOString().substring(0, 7) + "\nBucket: " + d[1] + "\nCount: " + d[2]; })
                             .rectSize([8, 8]);
             
-                        d3.csv("example1.csv", function (data) {
-                            var svg = d3.select("#example1")
+                        d3.csv("report-queue-latency.csv", function (data) {
+                            var svg = d3.select("#chart")
                                 .datum(data)
                                 .call(chart);
                         });

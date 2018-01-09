@@ -5,7 +5,7 @@ effective way to visualize latency data over time.  The chart is
 fast, easy to use, and produces beautiful images such as the
 below:
 
-![Example Latency Heatmap](samples/example1.png)
+![Example Latency Heatmap](samples/report-queue-latency.png)
 
 For more on latency heatmaps, see:
 * [Brendan Gregg's Latency Heat Maps](http://www.brendangregg.com/HeatMaps/latency.html)
@@ -17,7 +17,7 @@ D3 version 3.x is required (4.x is not supported).
 
 ```html
 <script src="//d3js.org/d3.v3.min.js"></script>
-<script src="//cdn.rawgit.com/sengelha/d3-latency-heatmap/master/latency-heatmap.v3.js"></script>
+<script src="//cdn.rawgit.com/sengelha/d3-latency-heatmap/master/latency-heatmap.v1.js"></script>
 
 <div id="chart"></div>
 <script>
@@ -54,6 +54,11 @@ D3 version 3.x is required (4.x is not supported).
 * See the [samples](samples/) directory for some usage examples.
 * This chart's API was modelled upon Mike Bostock's
   [Toward Reusable Charts](https://bost.ocks.org/mike/chart/) proposal.
+
+## Examples
+
+* [Report Queue Latency](samples/report-queue-latency.html)
+* [Animated Heatmap](samples/animated-heatmap.html)
 
 ## API Reference
 
