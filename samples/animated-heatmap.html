@@ -20,8 +20,7 @@
     <table>
         <tr>
             <td>
-                <h2>400x300</h2>
-                <div id="example2-1"></div>
+                <div id="chart"></div>
                 <script>
                     (function() {
                         var nCols = 100;
@@ -57,7 +56,7 @@
                                     count: Math.random()
                                 });
                             };
-                            var svg = d3.select("#example2-1")
+                            var svg = d3.select("#chart")
                                 .datum(data)
                                 .call(chart);
                         }, 1000);
