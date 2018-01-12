@@ -1,0 +1,1 @@
+export {default as latencyHeatmap} from "./src/latencyHeatmap";
