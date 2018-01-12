@@ -1,6 +1,6 @@
 {
   "name": "d3-latency-heatmap",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A reusable D3 latency heatmap chart.",
   "keywords": [
     "d3",
