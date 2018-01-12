@@ -5,7 +5,7 @@ effective way to visualize latency data over time.  The chart is
 fast, easy to use, and produces beautiful images such as the
 below:
 
-![Example Latency Heatmap](samples/example1.png)
+![Example Latency Heatmap](samples/report-queue-latency.png)
 
 For more on latency heatmaps, see:
 * [Brendan Gregg's Latency Heat Maps](http://www.brendangregg.com/HeatMaps/latency.html)
