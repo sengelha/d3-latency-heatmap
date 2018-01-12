@@ -23,7 +23,7 @@ is exported:
 
 ```html
 <script src="//d3js.org/d3.v4.min.js"></script>
-<script src="//unpkg.com/d3-latency-heatmap@1"></script>
+<script src="d3-latencyHeatmap.v1.min.js"></script>
 
 <div id="chart"></div>
 <script>
@@ -66,7 +66,7 @@ is exported:
 ### d3.latencyHeatmap()
 
 Creates a new latency heatmap chart which may later be rendered into a
-container.  Returns a *chart* object.
+container.  Returns a *latencyHeatmap* object.
 
 The typical pattern that the chart is rendered is by:
 1. Selecting the container (e.g. a `div`) into which the chart will be rendered
@@ -81,7 +81,7 @@ d3.select("#container")
     .call(chart);
 ```
 
-### *chart*.colorRange(*[minColor, maxColor]*)
+### *latencyHeatmap*.colorRange(*[minColor, maxColor]*)
 
 Defines the color range to be used when filling cells.  This color
 range will be interpolated using `d3.interpolateRgb()`.  If not set,
@@ -93,7 +93,7 @@ d3.latencyHeatmap()
     .colorRange([d3.rgb('#FFFFFF'), d3.rgb('#5B82A1')]);
 ```
 
-### *chart*.count(*accessor*)
+### *latencyHeatmap*.count(*accessor*)
 
 Defines an count accessor which is called for each row in `data`.
 Must return a number, which corresponds to the number of observations
@@ -105,7 +105,7 @@ d3.latencyHeatmap()
     .count(function(d) { return d.count; }); // d is { x: Date, y: number, count: number }
 ```
 
-### *chart*.height(*h*)
+### *latencyHeatmap*.height(*h*)
 
 Sets the height of the rendered chart to *h*.  Automatically scales
 the size of the drawn rectangles to fit the specified chart height.
@@ -120,7 +120,7 @@ d3.latencyHeatmap()
     .height(400);
 ```
 
-### *chart*.rectSize(*[w, h]*)
+### *latencyHeatmap*.rectSize(*[w, h]*)
 
 Sets the size of the individual rectangles used to draw the chart to
 be width *w* and height *w*.  When set, the chart automatically
@@ -133,7 +133,7 @@ d3.latencyHeatmap()
     .rectSize([6, 4]);
 ```
 
-### *chart*.tooltipText(*formatter*)
+### *latencyHeatmap*.tooltipText(*formatter*)
 
 Defines an accessor which can be used to control how tooltips for
 each drawn rectangle are formatted.  *formatter* is called with an
@@ -147,7 +147,7 @@ d3.latencyHeatmap()
     .tooltipText(function (d) { return "X: " + d[0] + " Y: " + d[1] + " Count: " + d[2]; });
 ```
 
-### *chart*.width(*w*)
+### *latencyHeatmap*.width(*w*)
 
 Sets the width of the rendered chart to *w*.  Automatically scales
 the size of the drawn rectangles to fit the specified chart width.
@@ -162,7 +162,7 @@ d3.latencyHeatmap()
     .width(600);
 ```
 
-### *chart*.x(*accessor*)
+### *latencyHeatmap*.x(*accessor*)
 
 Defines an x accessor which is called for each row in `data`.  Must return
 a `Date` object, which must correspond to the timestmap of the bucket.
@@ -174,7 +174,7 @@ d3.latencyHeatmap()
     .x(function(d) { return d.x; }); // d is { x: Date, y: number, count: number }
 ```
 
-### *chart*.xFormat(*formatter*)
+### *latencyHeatmap*.xFormat(*formatter*)
 
 Defines an accessor which can be used to control how tick labels on the
 x-axis are formatted.  *formatter* is called with the x-value for the tick,
@@ -187,7 +187,7 @@ d3.latencyHeatmap()
     .xFormat(function(dt) { return dt.toLocaleString(); });
 ```
 
-### *chart*.y(*accessor*)
+### *latencyHeatmap*.y(*accessor*)
 
 Defines an y accessor which is called for each row in `data`.  Must return
 a number, which corresponds to the y-value of the bucket.
@@ -199,7 +199,7 @@ d3.latencyHeatmap()
     .y(function(d) { return d.y; }); // d is { x: Date, y: number, count: number }
 ```
 
-### *chart*.yFormat(*accessor*)
+### *latencyHeatmap*.yFormat(*accessor*)
 
 Defines an accessor which can be used to control how tick labels on the
 y-axis are formatted.  *formatter* is called with the y-value for the tick.
