@@ -13,14 +13,15 @@ For more on latency heatmaps, see:
 
 ## Installing
 
-D3 version 4.x is required (3.x is not supported).
-
 If you use NPM, `npm install d3-latency-heatmap`.  Otherwise, download
 the [latest release binaries](https://sengelha.github.io/d3-latency-heatmap/d3-latencyHeatmap.v1.zip)
 or the [latest release source code](https://github.com/sengelha/d3-latency-heatmap/releases/latest).
 You can also load directly from
-[unpkg.com](https://unpkg.com/d3-latency-heatmap/).  AMD, CommonJS, and
-vanilla environments are supported. In vanilla, a d3 global is exported:
+[unpkg.com](https://unpkg.com/d3-latency-heatmap/).
+
+For convenience, you can use the [latest release
+binaries](https://sengelha.github.io/d3-latency-heatmap/d3-latencyHeatmap.v1.zip)
+with D3 version 4.x as follows (D3 version 3.x is not supported):
 
 ```html
 <script src="//d3js.org/d3.v4.min.js"></script>
