@@ -11,27 +11,33 @@ For more on latency heatmaps, see:
 * [Brendan Gregg's Latency Heat Maps](http://www.brendangregg.com/HeatMaps/latency.html)
 * [Visualizing System Latency](https://queue.acm.org/detail.cfm?id=1809426)
 
-## Getting Started
+## Installing
 
-D3 version 3.x is required (4.x is not supported).
+D3 version 4.x is required (3.x is not supported).
+
+If you use NPM, `npm install d3-latency-heatmap`.  Otherwise, download the
+[latest release](https://github.com/sengelha/d3-latency-heatmap/releases/latest).
+You can also load directly from [unpkg.com](https://unpkg.com/d3-latency-heatmap/).
+AMD, CommonJS, and vanilla environments are supported. In vanilla, a d3 global
+is exported:
 
 ```html
-<script src="//d3js.org/d3.v3.min.js"></script>
-<script src="//cdn.rawgit.com/sengelha/d3-latency-heatmap/master/latency-heatmap.v3.js"></script>
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script src="//unpkg.com/d3-latency-heatmap@1"></script>
 
 <div id="chart"></div>
 <script>
 (function() {
-    var formatTime = d3.time.format("%Y-%m");
+    var parseTime = d3.timeParse("%Y-%m");
     var chart = d3.latencyHeatmap()
-        .x(function (d) { return formatTime.parse(d.date); })
+        .x(function (d) { return parseTime(d.date); })
         .y(function (d) { return +d.bucket; })
         .yFormat(function(d) { return d + " s"; })
         .count(function(d) { return +d.count; })
         .colorRange([d3.rgb('#FFFFFF'), d3.rgb('#5B82A1')])
         .tooltipText(function (d) { return "YearMonth: " + d[0].toISOString().substring(0, 7) + "\nBucket: " + d[1] + "\nCount: " + d[2]; })
         .rectSize([8, 8]);
-    d3.csv("//cdn.rawgit.com/sengelha/d3-latency-heatmap/master/samples/example1.csv", function (data) {
+    d3.csv("//cdn.rawgit.com/sengelha/d3-latency-heatmap/master/samples/report-queue-latency.csv", function (data) {
         var svg = d3.select("#chart")
             .datum(data)
             .call(chart);

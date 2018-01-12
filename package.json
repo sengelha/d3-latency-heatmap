@@ -1,6 +1,6 @@
 {
   "name": "d3-latency-heatmap",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A reusable D3 latency heatmap chart.",
   "keywords": [
     "d3",
@@ -11,7 +11,7 @@
     "url": "http://stevenengelhardt.com"
   },
   "license": "MIT",
-  "main": "build/d3-latencyHeatmap.js",
+  "main": "build/d3-latencyHeatmap.v1.js",
   "module": "index",
   "jsnext:main": "index",
   "homepage": "https://github.com/sengelha/d3-latency-heatmap",
@@ -23,18 +23,17 @@
     "url": "https://github.com/sengelha/d3-latency-heatmap/issues"
   },
   "scripts": {
-    "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -g d3-axis:d3,d3-collection:d3,d3-color:d3,d3-interpolate:d3,d3-scale:d3,d3-selection:d3 -f umd -n d3 -o build/d3-latencyHeatmap.js -- index.js",
+    "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -g d3-axis:d3,d3-collection:d3,d3-color:d3,d3-interpolate:d3,d3-scale:d3 -f umd -n d3 -o build/d3-latencyHeatmap.v1.js -- index.js",
     "test": "tape 'test/**/*-test.js' && eslint index.js src",
-    "prepare": "npm run test && uglifyjs -b beautify=false,preamble=\"'$(preamble)'\" build/d3-latencyHeatmap.js -c -m -o build/d3-latencyHeatmap.min.js",
-    "postpublish": "git push && git push --tags && zip -j build/d3-latencyHeatmap.zip -- LICENSE README.md build/d3-latencyHeatmap.js build/d3-latencyHeatmap.min.js"
+    "prepare": "npm run test && uglifyjs -b beautify=false,preamble=\"'$(preamble)'\" build/d3-latencyHeatmap.v1.js -c -m -o build/d3-latencyHeatmap.v1.min.js",
+    "postpublish": "git push && git push --tags && zip -j build/d3-latencyHeatmap.zip -- LICENSE README.md build/d3-latencyHeatmap.v1.js build/d3-latencyHeatmap.v1.min.js"
   },
   "dependencies": {
     "d3-axis": "1",
     "d3-collection": "1",
     "d3-color": "1",
     "d3-interpolate": "1",
-    "d3-scale": "1",
-    "d3-selection": "1"
+    "d3-scale": "1"
   },
   "devDependencies": {
     "eslint": "4",

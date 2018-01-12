@@ -1,0 +1,30 @@
+<script src="//unpkg.com/d3-axis@1"></script>
+<script src="//unpkg.com/d3-collection@1"></script>
+<script src="//unpkg.com/d3-color@1"></script>
+<script src="//unpkg.com/d3-dispatch@1"></script>
+<script src="//unpkg.com/d3-interpolate@1"></script>
+<script src="//unpkg.com/d3-request@1"></script>
+<script src="//unpkg.com/d3-scale@1"></script>
+<script src="//unpkg.com/d3-selection@1"></script>
+<script src="//unpkg.com/d3-time-format@1"></script>
+<script src="//unpkg.com/d3-latency-heatmap@1"></script>
+
+<div id="chart"></div>
+<script>
+(function() {
+    var parseTime = d3.timeParse("%Y-%m");
+    var chart = d3.latencyHeatmap()
+        .x(function (d) { return parseTime(d.date); })
+        .y(function (d) { return +d.bucket; })
+        .yFormat(function(d) { return d + " s"; })
+        .count(function(d) { return +d.count; })
+        .colorRange([d3.rgb('#FFFFFF'), d3.rgb('#5B82A1')])
+        .tooltipText(function (d) { return "YearMonth: " + d[0].toISOString().substring(0, 7) + "\nBucket: " + d[1] + "\nCount: " + d[2]; })
+        .rectSize([8, 8]);
+    d3.csv("//cdn.rawgit.com/sengelha/d3-latency-heatmap/master/samples/report-queue-latency.csv", function (data) {
+        var svg = d3.select("#chart")
+            .datum(data)
+            .call(chart);
+    });
+})();
+</script>
