@@ -1,5 +1,6 @@
+import {extent} from "d3-array";
 import {axisBottom, axisLeft} from "d3-axis";
-import {extent, nest} from "d3-collection";
+import {nest} from "d3-collection";
 import {rgb} from "d3-color";
 import {interpolateRgb} from "d3-interpolate";
 import {scaleLinear, scaleTime} from "d3-scale";
