@@ -9,6 +9,7 @@ below:
 
 For more on latency heatmaps, see:
 * [Brendan Gregg's Latency Heat Maps](http://www.brendangregg.com/HeatMaps/latency.html)
+* My blog post series on [Visualizing Latency](https://stevenengelhardt.com/post-series/visualizing-latency-2017/)
 * [Visualizing System Latency](https://queue.acm.org/detail.cfm?id=1809426)
 
 ## Installing
