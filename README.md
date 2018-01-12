@@ -23,7 +23,7 @@ is exported:
 
 ```html
 <script src="//d3js.org/d3.v4.min.js"></script>
-<script src="../build/d3-latencyHeatmap.v1.min.js"></script>
+<script src="//sengelha.github.io/d3-latency-heatmap/d3-latencyHeatmap.v1.min.js"></script>
 
 <div id="chart"></div>
 <script>
