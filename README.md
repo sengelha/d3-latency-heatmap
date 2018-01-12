@@ -37,7 +37,7 @@ is exported:
         .colorRange([d3.rgb('#FFFFFF'), d3.rgb('#5B82A1')])
         .tooltipText(function (d) { return "YearMonth: " + d[0].toISOString().substring(0, 7) + "\nBucket: " + d[1] + "\nCount: " + d[2]; })
         .rectSize([8, 8]);
-    d3.csv("//cdn.rawgit.com/sengelha/d3-latency-heatmap/master/samples/report-queue-latency.csv", function (data) {
+    d3.csv("//sengelha.github.io/d3-latency-heatmap/sample-data.csv", function (data) {
         var svg = d3.select("#chart")
             .datum(data)
             .call(chart);
