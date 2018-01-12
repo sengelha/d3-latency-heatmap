@@ -26,7 +26,7 @@
     "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -g d3-array:d3,d3-axis:d3,d3-collection:d3,d3-color:d3,d3-interpolate:d3,d3-scale:d3 -f umd -n d3 -o build/d3-latencyHeatmap.v1.js -- index.js",
     "test": "tape 'test/**/*-test.js' && eslint index.js src",
     "prepare": "npm run test && uglifyjs -b beautify=false,preamble=\"'$(preamble)'\" build/d3-latencyHeatmap.v1.js -c -m -o build/d3-latencyHeatmap.v1.min.js",
-    "postpublish": "git push && git push --tags && zip -j build/d3-latencyHeatmap.zip -- LICENSE README.md build/d3-latencyHeatmap.v1.js build/d3-latencyHeatmap.v1.min.js && echo \"Don't forget to publish to sengelha.github.io\""
+    "postpublish": "git push && git push --tags && zip -j build/d3-latencyHeatmap.v1.zip -- LICENSE README.md build/d3-latencyHeatmap.v1.js build/d3-latencyHeatmap.v1.min.js && echo \"Don't forget to publish to sengelha.github.io\""
   },
   "dependencies": {
     "d3-array": "1",
