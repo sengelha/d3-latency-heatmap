@@ -23,7 +23,7 @@ is exported:
 
 ```html
 <script src="//d3js.org/d3.v4.min.js"></script>
-<script src="d3-latencyHeatmap.v1.min.js"></script>
+<script src="../build/d3-latencyHeatmap.v1.min.js"></script>
 
 <div id="chart"></div>
 <script>
@@ -57,9 +57,14 @@ is exported:
   if the number of observations per x-value (e.g. per day) increases
   over time, the cells will start with faint colors and grow more
   intense over time.
-* See the [samples](samples/) directory for some usage examples.
 * This chart's API was modelled upon Mike Bostock's
   [Toward Reusable Charts](https://bost.ocks.org/mike/chart/) proposal.
+
+## Examples
+
+* [Report Queue Latency](samples/report-queue-latency.html)
+* [Animated Heatmap](samples/animated-heatmap.html)
+* [Using with Unpkg](samples/unpkg-modules.html)
 
 ## API Reference
 
